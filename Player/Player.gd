@@ -13,6 +13,8 @@ onready var Bullet = load("res://Player/Bullet.tscn")
 onready var Explosion = load("res://Effects/Explosion.tscn")
 var Effects = null
 
+var p = 0
+
 func _ready():
 	pass
 
@@ -22,6 +24,8 @@ func _physics_process(_delta):
 	velocity = move_and_slide(velocity, Vector2.ZERO)
 	position.x = wrapf(position.x, 0.0, Global.VP.x)
 	position.y = wrapf(position.y, 0.0, Global.VP.y)
+	p += 0.01
+	$Camera2D.zoom = Vector2(sin(p) + 1.2, sin(p) + 1.2)
 
 
 func get_input():
