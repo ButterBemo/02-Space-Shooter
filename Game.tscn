@@ -1,12 +1,32 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Player/Player_Container.gd" type="Script" id=1]
 [ext_resource path="res://Asteroid/Asteroid_Container.gd" type="Script" id=2]
 [ext_resource path="res://Enemy/Enemy_Container.gd" type="Script" id=3]
 [ext_resource path="res://UI/Game.gd" type="Script" id=4]
+[ext_resource path="res://Planets/Rivers/Rivers.tscn" type="PackedScene" id=5]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 100.0
 
 [node name="Game" type="Node2D"]
 script = ExtResource( 4 )
+
+[node name="Planet" type="StaticBody2D" parent="."]
+position = Vector2( 856.047, 452.391 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Planet" parent="Planet" instance=ExtResource( 5 )]
+margin_left = -100.0
+margin_top = -100.0
+margin_right = -100.0
+margin_bottom = -100.0
+rect_scale = Vector2( 2, 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Planet"]
+shape = SubResource( 1 )
 
 [node name="Player_Container" type="Node2D" parent="."]
 script = ExtResource( 1 )

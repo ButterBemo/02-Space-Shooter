@@ -4,6 +4,7 @@ var velocity = Vector2.ZERO
 var speed = 5.0
 var max_speed = 400.0
 var rot_speed = 5.0
+var planet_mass = 10000.0
 
 var nose = Vector2(0,-60)
 
@@ -12,11 +13,16 @@ var health = 10
 onready var Bullet = load("res://Player/Bullet.tscn")
 onready var Explosion = load("res://Effects/Explosion.tscn")
 var Effects = null
+var Planet = null
 
 func _ready():
 	pass
 
 func _physics_process(_delta):
+	Planet = get_node_or_null("/root/Game/Planet")
+	if Planet != null:
+		var gravity = global_position.direction_to(Planet.global_position)*1/pow(global_position.distance_to(Planet.global_position),2)*planet_mass
+		velocity += gravity
 	velocity += get_input()*speed
 	velocity = velocity.normalized() * clamp(velocity.length(), 0, max_speed)
 	velocity = move_and_slide(velocity, Vector2.ZERO)
