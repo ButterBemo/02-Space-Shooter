@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://Assets/Player.png" type="Texture" id=1]
-[ext_resource path="res://Player/Player.gd" type="Script" id=2]
+[ext_resource path="res://Assets/ship_G.png" type="Texture" id=1]
+[ext_resource path="res://Player/ShipG.gd" type="Script" id=2]
 [ext_resource path="res://Assets/Exhaust.png" type="Texture" id=3]
 
 [node name="Player" type="KinematicBody2D"]

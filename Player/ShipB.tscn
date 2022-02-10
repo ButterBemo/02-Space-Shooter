@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Player/ShipB.gd" type="Script" id=1]
+[ext_resource path="res://Assets/ship_B.png" type="Texture" id=2]
+[ext_resource path="res://Assets/Exhaust.png" type="Texture" id=3]
+
+[node name="Player" type="KinematicBody2D"]
+script = ExtResource( 1 )
+
+[node name="Exhaust" type="Sprite" parent="."]
+position = Vector2( 0, 50 )
+texture = ExtResource( 3 )
+
+[node name="Sprite" type="Sprite" parent="."]
+texture = ExtResource( 2 )
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PoolVector2Array( 5, -17.2, 5, -13.3, 12.7, 11, 9.7, 11, -0.6, 20.4, -3, 19.3, -3, 17.9, -12, 9.9, -12, 4.6, -3, -17.6, -3, -21.2 )
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D"]
+polygon = PoolVector2Array( -0.0749359, -25.5749, 15.9501, 12.9251, 0.575058, 22.5501, -14.9249, 12.1751, -15.2999, 0.175064 )
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_Area2D_body_entered"]
