@@ -1,6 +1,7 @@
 extends Node
 
-var VP = Vector2.ZERO
+var ViewPort = Vector2.ZERO
+var VP = Vector2(1000,1000)
 var score = 0
 var lives = 5
 
@@ -8,7 +9,7 @@ var lives = 5
 func _ready():
 	pause_mode = Node.PAUSE_MODE_PROCESS
 	randomize()
-	VP = get_viewport().size
+	ViewPort = get_viewport().size
 	var _signal = get_tree().get_root().connect("size_changed", self, "_resize")
 	reset()
 	
@@ -21,7 +22,7 @@ func _unhandled_input(_event):
 		get_tree().quit()
 
 func _resize():
-	VP = get_viewport().size
+	ViewPort = get_viewport().size
 
 
 func update_score(s):

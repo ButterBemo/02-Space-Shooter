@@ -1,12 +1,18 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Player/Player_Container.gd" type="Script" id=1]
 [ext_resource path="res://Asteroid/Asteroid_Container.gd" type="Script" id=2]
 [ext_resource path="res://Enemy/Enemy_Container.gd" type="Script" id=3]
 [ext_resource path="res://UI/Game.gd" type="Script" id=4]
+[ext_resource path="res://Assets/background.jpeg" type="Texture" id=5]
+[ext_resource path="res://UI/Camera.gd" type="Script" id=6]
 
 [node name="Game" type="Node2D"]
 script = ExtResource( 4 )
+
+[node name="Background" type="Sprite" parent="."]
+texture = ExtResource( 5 )
+centered = false
 
 [node name="Player_Container" type="Node2D" parent="."]
 script = ExtResource( 1 )
@@ -55,3 +61,19 @@ valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Camera" type="Camera2D" parent="."]
+current = true
+limit_left = 0
+limit_top = 0
+limit_right = 3600
+limit_bottom = 2695
+script = ExtResource( 6 )
+
+[node name="Tween" type="Tween" parent="Camera"]
+
+[node name="Respawn" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[connection signal="timeout" from="Respawn" to="Player_Container" method="_on_Respawn_timeout"]
