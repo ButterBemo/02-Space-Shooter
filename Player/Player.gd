@@ -8,6 +8,15 @@ var rot_speed = 5.0
 var nose = Vector2(0,-60)
 
 var health = 10
+var shields = 0
+var shield_regen = 0.01
+var shield_max = 50.0
+var shield_textures = [
+	preload("res://Assets/shield1.png"),
+	preload("res://Assets/shield2.png"),
+	preload("res://Assets/shield3.png")
+]
+
 
 onready var Bullet = load("res://Player/Bullet.tscn")
 onready var Explosion = load("res://Effects/Explosion.tscn")
@@ -22,6 +31,22 @@ func _physics_process(_delta):
 	velocity = move_and_slide(velocity, Vector2.ZERO)
 	position.x = wrapf(position.x, 0.0, Global.VP.x)
 	position.y = wrapf(position.y, 0.0, Global.VP.y)
+	
+	shields = clamp(shields + shield_regen,-100,shield_max)
+	if shields >= shield_max:
+		$Shield.hide()
+	elif shields >= shield_max * 0.75:
+		$Shield.show()
+		$Shield/Sprite.texture = shield_textures[2]
+	elif shields >= shield_max * 0.4:
+		$Shield.show()
+		$Shield/Sprite.texture = shield_textures[1]
+	elif shields > 0:
+		$Shield.show()
+		$Shield/Sprite.texture = shield_textures[0]
+	else:
+		$Shield.hide()
+	
 
 
 func get_input():
@@ -64,3 +89,17 @@ func _on_Area2D_body_entered(body):
 		if body.has_method("damage"):
 			body.damage(100)
 		damage(100)
+
+
+func _on_Shield_area_entered(area):
+	if "damage" in area and not area.is_in_group("friendly") and shields >= 0:
+		shields -= area.damage
+		area.queue_free()
+		
+
+
+func _on_Shield_body_entered(body):
+	if body != self and not body.is_in_group("friendly") and body.has_method("damage") and shields >= 0:
+		shields -= 100
+		body.damage(100)
+		
