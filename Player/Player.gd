@@ -9,7 +9,8 @@ var nose = Vector2(0,-60)
 
 var health = 10
 
-onready var Bullet = load("res://Player/Bullet.tscn")
+var buffs = 0
+
 onready var Explosion = load("res://Effects/Explosion.tscn")
 var Effects = null
 
@@ -34,18 +35,41 @@ func get_input():
 		rotation_degrees -= rot_speed
 	if Input.is_action_pressed("right"):
 		rotation_degrees += rot_speed
-	if Input.is_action_just_pressed("shoot"):
+	if Input.is_action_pressed("shoot"):
 		shoot()
+	if Input.is_action_pressed("shoot_secondary"):
+		shoot_secondary()
 	return dir.rotated(rotation)
 
 
 func shoot():
-	Effects = get_node_or_null("/root/Game/Effects")
-	if Effects != null:
-		var bullet = Bullet.instance()
-		Effects.add_child(bullet)
-		bullet.rotation = rotation
-		bullet.global_position = global_position + nose.rotated(rotation)
+	for w in $Primary.get_children():
+		if w.has_method("shoot"):
+			w.shoot(rotation, global_position + nose.rotated(rotation))
+
+func shoot_secondary():
+	for w in $Secondary.get_children():
+		if w.has_method("shoot"):
+			w.shoot(rotation, global_position + nose.rotated(rotation))
+
+func buff_red():
+	for w in $Primary.get_children():
+		var t = w.get_node_or_null("Timer")
+		if t != null:
+			t.wait_time *= 0.9
+
+func buff_green():
+	if not $Primary.find_node("Shotgun"):
+		for w in $Primary.get_children():
+			w.queue_free()
+		var Shotgun = load("res://Weapons/Shotgun.tscn")
+		var s = Shotgun.instance()
+		$Primary.add_child(s)
+	else:
+		for w in $Primary.get_children():
+			var t = w.get_node_or_null("Timer")
+			if t != null:
+				t.wait_time *= 0.9
 
 func damage(d):
 	health -= d

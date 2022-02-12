@@ -1,8 +1,10 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Assets/Player.png" type="Texture" id=1]
 [ext_resource path="res://Player/Player.gd" type="Script" id=2]
 [ext_resource path="res://Assets/Exhaust.png" type="Texture" id=3]
+[ext_resource path="res://Weapons/PewPew.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Weapons/Rocket_Launcher.tscn" type="PackedScene" id=5]
 
 [node name="Player" type="KinematicBody2D"]
 script = ExtResource( 2 )
@@ -21,5 +23,13 @@ polygon = PoolVector2Array( 5, -25.2, 5, -22.5, 28.3, 17, 27.2, 19, 25.9, 19, 17
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D"]
 polygon = PoolVector2Array( -0.266724, -36.6002, -34.2667, 15.8998, -33.7667, 18.7332, -18.1001, 33.3998, -14.1001, 33.2332, -3.60005, 22.7332, 4.56662, 22.5665, 14.2333, 33.3998, 19.0666, 32.8998, 31.8999, 17.8998, 31.3999, 14.2332 )
+
+[node name="Primary" type="Node2D" parent="."]
+
+[node name="PewPew" parent="Primary" instance=ExtResource( 4 )]
+
+[node name="Secondary" type="Node2D" parent="."]
+
+[node name="Rocket_Launcher" parent="Secondary" instance=ExtResource( 5 )]
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_Area2D_body_entered"]
