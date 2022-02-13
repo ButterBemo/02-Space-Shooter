@@ -19,6 +19,5 @@ polygon = PoolVector2Array( -1.38916, -36.4375, -15.8848, -2.49635, -31.4412, 7.
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 2.0
-autostart = true
 
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

@@ -34,8 +34,8 @@ func get_input():
 		rotation_degrees -= rot_speed
 	if Input.is_action_pressed("right"):
 		rotation_degrees += rot_speed
-	if Input.is_action_just_pressed("shoot"):
-		shoot()
+	#if Input.is_action_just_pressed("shoot"):
+	#	shoot()
 	return dir.rotated(rotation)
 
 
