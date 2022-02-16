@@ -1,6 +1,17 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://UI/Main_Menu.gd" type="Script" id=1]
+[ext_resource path="res://Assets/background.jpeg" type="Texture" id=2]
+[ext_resource path="res://Assets/kenvector_future_thin.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://Assets/kenvector_future.ttf" type="DynamicFontData" id=4]
+
+[sub_resource type="DynamicFont" id=1]
+size = 32
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 14
+font_data = ExtResource( 4 )
 
 [node name="Main_Menu" type="Control"]
 anchor_right = 1.0
@@ -10,9 +21,28 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="TextureRect" type="TextureRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = 256.0
+margin_bottom = 359.0
+texture = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 0.709804 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="Label" type="Label" parent="."]
 anchor_right = 1.0
 margin_bottom = 400.0
+custom_fonts/font = SubResource( 1 )
 text = "Welcome to the Space Shooter"
 align = 1
 valign = 1
@@ -26,6 +56,10 @@ margin_left = -75.0
 margin_top = -20.0
 margin_right = 75.0
 margin_bottom = 20.0
+custom_fonts/font = SubResource( 2 )
 text = "Play"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [connection signal="pressed" from="Play" to="." method="_on_Play_pressed"]

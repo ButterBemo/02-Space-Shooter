@@ -1,9 +1,19 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Player/Player_Container.gd" type="Script" id=1]
 [ext_resource path="res://Asteroid/Asteroid_Container.gd" type="Script" id=2]
 [ext_resource path="res://Enemy/Enemy_Container.gd" type="Script" id=3]
 [ext_resource path="res://UI/Game.gd" type="Script" id=4]
+[ext_resource path="res://Assets/kenvector_future.ttf" type="DynamicFontData" id=5]
+[ext_resource path="res://UI/Collision.gd" type="Script" id=6]
+[ext_resource path="res://Assets/kenvector_future_thin.ttf" type="DynamicFontData" id=7]
+
+[sub_resource type="DynamicFont" id=2]
+size = 120
+font_data = ExtResource( 7 )
+
+[sub_resource type="DynamicFont" id=1]
+font_data = ExtResource( 5 )
 
 [node name="Game" type="Node2D"]
 script = ExtResource( 4 )
@@ -21,6 +31,38 @@ script = ExtResource( 3 )
 
 [node name="UI" type="CanvasLayer" parent="."]
 
+[node name="Collision" type="Control" parent="UI"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="ColorRect" type="ColorRect" parent="UI/Collision"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.941176, 0.243137, 0.243137, 0.254902 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="UI/Collision"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_fonts/font = SubResource( 2 )
+text = "Warning"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Timer" type="Timer" parent="UI/Collision"]
+wait_time = 0.2
+one_shot = true
+
 [node name="HUD" type="Control" parent="UI"]
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -37,21 +79,23 @@ __meta__ = {
 }
 
 [node name="Score" type="Label" parent="UI/HUD"]
-margin_left = 5.0
-margin_right = 505.0
+margin_left = 10.0
+margin_right = 510.0
 margin_bottom = 40.0
+custom_fonts/font = SubResource( 1 )
 text = "Score: "
-valign = 1
-
-[node name="Lives" type="Label" parent="UI/HUD"]
-anchor_left = 1.0
-anchor_right = 1.0
-margin_left = -500.0
-margin_right = -5.0
-margin_bottom = 40.0
-text = "Lives: "
-align = 2
 valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Lives" type="Control" parent="UI/HUD"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -512.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="timeout" from="UI/Collision/Timer" to="UI/Collision" method="_on_Timer_timeout"]

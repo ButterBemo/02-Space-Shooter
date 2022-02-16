@@ -7,14 +7,15 @@ var rot_speed = 5.0
 
 var nose = Vector2(0,-60)
 
-var health = 10
+var health = 10.0
+var max_health = 10.0
 
 onready var Bullet = load("res://Player/Bullet.tscn")
 onready var Explosion = load("res://Effects/Explosion.tscn")
 var Effects = null
 
 func _ready():
-	pass
+	damage(0)
 
 func _physics_process(_delta):
 	velocity += get_input()*speed
@@ -26,17 +27,19 @@ func _physics_process(_delta):
 
 func get_input():
 	var dir = Vector2.ZERO
-	$Exhaust.hide()
+	$Pivot/Exhaust.hide()
 	if Input.is_action_pressed("up"):
-		$Exhaust.show()
+		$Pivot/Exhaust.show()
 		dir += Vector2(0,-1)
 	if Input.is_action_pressed("left"):
-		rotation_degrees -= rot_speed
+		$Pivot.rotation_degrees -= rot_speed
+		$Collision.rotation_degrees -= rot_speed
 	if Input.is_action_pressed("right"):
-		rotation_degrees += rot_speed
+		$Pivot.rotation_degrees += rot_speed
+		$Collision.rotation_degrees += rot_speed
 	if Input.is_action_just_pressed("shoot"):
 		shoot()
-	return dir.rotated(rotation)
+	return dir.rotated($Pivot.rotation)
 
 
 func shoot():
@@ -44,11 +47,19 @@ func shoot():
 	if Effects != null:
 		var bullet = Bullet.instance()
 		Effects.add_child(bullet)
-		bullet.rotation = rotation
-		bullet.global_position = global_position + nose.rotated(rotation)
+		bullet.rotation = $Pivot.rotation
+		bullet.global_position = global_position + nose.rotated($Pivot.rotation)
 
 func damage(d):
 	health -= d
+	$Health.value = (health/max_health)*100
+	var hb_color = $Health.get("custom_styles/fg")
+	if $Health.value > 75.0:
+		hb_color.set_bg_color(Color8(130,201,30))
+	elif $Health.value > 40.0:
+		hb_color.set_bg_color(Color8(252,196,25))
+	else:
+		hb_color.set_bg_color(Color8(224,49,49))
 	if health <= 0:
 		Effects = get_node_or_null("/root/Game/Effects")
 		if Effects != null:
@@ -64,3 +75,10 @@ func _on_Area2D_body_entered(body):
 		if body.has_method("damage"):
 			body.damage(100)
 		damage(100)
+
+
+func _on_Collide_body_entered(body):
+	if body != self:
+		var Collide = get_node_or_null("/root/Game/UI/Collision")
+		if Collide != null:
+			Collide.collide()
