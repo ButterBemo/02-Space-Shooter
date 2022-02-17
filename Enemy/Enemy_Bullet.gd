@@ -16,6 +16,8 @@ func _on_Timer_timeout():
 
 
 func _on_Enemy_Bullet_body_entered(body):
+	if body.is_in_group("Boss"):
+		return
 	if body.has_method("damage"):
 		body.damage(damage)
 	Effects = get_node_or_null("/root/Game/Effects")

@@ -1,12 +1,31 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Player/Player_Container.gd" type="Script" id=1]
 [ext_resource path="res://Asteroid/Asteroid_Container.gd" type="Script" id=2]
 [ext_resource path="res://Enemy/Enemy_Container.gd" type="Script" id=3]
 [ext_resource path="res://UI/Game.gd" type="Script" id=4]
+[ext_resource path="res://Assets/background.png" type="Texture" id=5]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 1, 0, 0, 1 )
 
 [node name="Game" type="Node2D"]
 script = ExtResource( 4 )
+
+[node name="Background" type="Sprite" parent="."]
+scale = Vector2( 3, 3 )
+texture = ExtResource( 5 )
+centered = false
+
+[node name="ColorRect2" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = 6000.0
+margin_bottom = 3900.0
+color = Color( 0, 0, 0, 0.501961 )
+__meta__ = {
+"_edit_use_anchors_": true
+}
 
 [node name="Player_Container" type="Node2D" parent="."]
 script = ExtResource( 1 )
@@ -16,6 +35,11 @@ script = ExtResource( 2 )
 
 [node name="Enemy_Container" type="Node2D" parent="."]
 script = ExtResource( 3 )
+
+[node name="Timer" type="Timer" parent="Enemy_Container"]
+wait_time = 2.0
+one_shot = true
+autostart = true
 
 [node name="Effects" type="Node2D" parent="."]
 
@@ -55,3 +79,19 @@ valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Boss_Health" type="ProgressBar" parent="UI/HUD"]
+visible = false
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -30.0
+margin_bottom = 12.0
+custom_styles/fg = SubResource( 1 )
+value = 100.0
+percent_visible = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="timeout" from="Enemy_Container/Timer" to="Enemy_Container" method="_on_Timer_timeout"]

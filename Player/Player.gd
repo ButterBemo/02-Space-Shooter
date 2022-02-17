@@ -14,7 +14,11 @@ onready var Explosion = load("res://Effects/Explosion.tscn")
 var Effects = null
 
 func _ready():
-	pass
+	var Boss = get_node_or_null("/root/Game/Enemy_Container/Boss")
+	if Boss == null:
+		$Camera2D.current = true
+	else:
+		$Camera2D.current = false
 
 func _physics_process(_delta):
 	velocity += get_input()*speed
