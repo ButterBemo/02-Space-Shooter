@@ -84,3 +84,11 @@ limit_top = 0
 limit_right = 4000
 limit_bottom = 2748
 script = ExtResource( 6 )
+
+[node name="Tween" type="Tween" parent="Camera"]
+
+[node name="Respawn" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+
+[connection signal="timeout" from="Respawn" to="Player_Container" method="_on_Respawn_timeout"]
