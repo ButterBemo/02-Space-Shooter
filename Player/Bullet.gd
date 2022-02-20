@@ -6,6 +6,8 @@ var damage = 1
 onready var Explosion = load("res://Effects/Explosion.tscn")
 var Effects = null
 
+var originates = ""
+
 func _physics_process(delta):
 	position += velocity.rotated(rotation)*delta
 	position.x = wrapf(position.x, 0, Global.VP.x)
@@ -17,7 +19,7 @@ func _on_Timer_timeout():
 
 
 func _on_Bullet_body_entered(body):
-	if body.name != "Player" and body.has_method("damage"):
+	if body.name != originates and body.has_method("damage"):
 		body.damage(damage)
 		Effects = get_node_or_null("/root/Game/Effects")
 		if Effects != null:

@@ -1,12 +1,18 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Player/Player_Container.gd" type="Script" id=1]
 [ext_resource path="res://Asteroid/Asteroid_Container.gd" type="Script" id=2]
 [ext_resource path="res://Enemy/Enemy_Container.gd" type="Script" id=3]
 [ext_resource path="res://UI/Game.gd" type="Script" id=4]
+[ext_resource path="res://Assets/background.jpg" type="Texture" id=5]
+[ext_resource path="res://UI/Camera.gd" type="Script" id=6]
 
 [node name="Game" type="Node2D"]
 script = ExtResource( 4 )
+
+[node name="Backround" type="Sprite" parent="."]
+texture = ExtResource( 5 )
+centered = false
 
 [node name="Player_Container" type="Node2D" parent="."]
 script = ExtResource( 1 )
@@ -43,7 +49,7 @@ margin_bottom = 40.0
 text = "Score: "
 valign = 1
 
-[node name="Lives" type="Label" parent="UI/HUD"]
+[node name="P1Lives" type="Label" parent="UI/HUD"]
 anchor_left = 1.0
 anchor_right = 1.0
 margin_left = -500.0
@@ -55,3 +61,26 @@ valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="P2Lives" type="Label" parent="UI/HUD"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -495.757
+margin_top = 38.8909
+margin_right = -0.757446
+margin_bottom = 78.8909
+text = "Lives: "
+align = 2
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Camera" type="Camera2D" parent="."]
+current = true
+zoom = Vector2( 3, 3 )
+limit_left = 0
+limit_top = 0
+limit_right = 4000
+limit_bottom = 2748
+script = ExtResource( 6 )

@@ -13,8 +13,13 @@ onready var Bullet = load("res://Player/Bullet.tscn")
 onready var Explosion = load("res://Effects/Explosion.tscn")
 var Effects = null
 
+
+var controls = ["up","down","left","right","shoot"]
+
+
 func _ready():
-	pass
+	if name == "Player2":
+		controls = ["up2","down2","left2","right2","shoot2"]
 
 func _physics_process(_delta):
 	velocity += get_input()*speed
@@ -27,14 +32,14 @@ func _physics_process(_delta):
 func get_input():
 	var dir = Vector2.ZERO
 	$Exhaust.hide()
-	if Input.is_action_pressed("up"):
+	if Input.is_action_pressed(controls[0]):
 		$Exhaust.show()
 		dir += Vector2(0,-1)
-	if Input.is_action_pressed("left"):
+	if Input.is_action_pressed(controls[2]):
 		rotation_degrees -= rot_speed
-	if Input.is_action_pressed("right"):
+	if Input.is_action_pressed(controls[3]):
 		rotation_degrees += rot_speed
-	if Input.is_action_just_pressed("shoot"):
+	if Input.is_action_just_pressed(controls[4]):
 		shoot()
 	return dir.rotated(rotation)
 
@@ -44,6 +49,7 @@ func shoot():
 	if Effects != null:
 		var bullet = Bullet.instance()
 		Effects.add_child(bullet)
+		bullet.originates = name
 		bullet.rotation = rotation
 		bullet.global_position = global_position + nose.rotated(rotation)
 
@@ -55,12 +61,12 @@ func damage(d):
 			var explosion = Explosion.instance()
 			explosion.global_position = global_position
 			Effects.add_child(explosion)
-		Global.update_lives(-1)
+		Global.update_lives(-1, name)
 		queue_free()
 
 
 func _on_Area2D_body_entered(body):
-	if body.name != "Player":
+	if body != self:
 		if body.has_method("damage"):
 			body.damage(100)
 		damage(100)
