@@ -20,4 +20,4 @@ https://opengameart.org/content/explosion-sheet
 None
 
 ## Created by
-Jason Francis
+Travon Ternoir
