@@ -1,18 +1,29 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://UI/Main_Menu.gd" type="Script" id=1]
+[ext_resource path="res://Assets/heic1307a.jpg" type="Texture" id=2]
 
 [node name="Main_Menu" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
+
+[node name="TextureRect" type="TextureRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 1.0
+margin_top = 2.0
+margin_right = 1.0
+margin_bottom = 402.0
+texture = ExtResource( 2 )
+stretch_mode = 1
 
 [node name="Label" type="Label" parent="."]
 anchor_right = 1.0
-margin_bottom = 400.0
+margin_left = 1.0
+margin_top = 3.0
+margin_right = 1.0
+margin_bottom = 403.0
 text = "Welcome to the Space Shooter"
 align = 1
 valign = 1
